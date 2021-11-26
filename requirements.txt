@@ -1,0 +1,6 @@
+pandas
+numpy
+black
+isort
+pylint
+scipy
