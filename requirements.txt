@@ -8,3 +8,5 @@ check-manifest
 twine
 matplotlib
 seaborn
+pytest
+pytest-cov
