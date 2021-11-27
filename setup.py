@@ -4,7 +4,7 @@ with open("README.md", "r") as file:
     long_description = file.read()
 
 setup(
-    name="portfolio-analysis-library",
+    name="pal",
     description="#WIP: Analysing Stock Returns & Constructing Portfolios with Python",
     version="0.0.1",
     author="Reza N",
