@@ -1,0 +1,4 @@
+include *.txt
+recursive-include tests *.CSV
+recursive-include tests *.csv
+recursive-include tests *.py
