@@ -1,6 +1,5 @@
 import numpy as np
-import pytest
-from src import main, utils
+from pal import portfolio, utils
 
 from .desired import Desired
 
@@ -9,45 +8,45 @@ hfi = utils.load_hfi_returns()
 
 
 def test_analyse_returns_annual_ret():
-    ffme_portfolio = main.Portfolio(ffme, 12)
+    ffme_portfolio = portfolio.Portfolio(ffme, 12)
     desired = Desired.FFME_ANN_RET
     actual = ffme_portfolio.analysed_returns["annual_ret"].to_dict()
     utils.numpy_assert_almost_dicts(desired, actual)
 
 
 def test_analyse_returns_per_period_ret():
-    ffme_portfolio = main.Portfolio(ffme, 12)
+    ffme_portfolio = portfolio.Portfolio(ffme, 12)
     desired = Desired.FFME_PER_PERIOD_RET
     actual = ffme_portfolio.analysed_returns["per_period_ret"].to_dict()
     utils.numpy_assert_almost_dicts(desired, actual)
 
 
 def test_analyse_risk_annual_vol():
-    ffme_portfolio = main.Portfolio(ffme, 12)
+    ffme_portfolio = portfolio.Portfolio(ffme, 12)
     desired = Desired.FFME_ANN_VOL
     actual = ffme_portfolio.analysed_risk["annual_vol"].to_dict()
     utils.numpy_assert_almost_dicts(desired, actual)
 
 
 def test_analyse_risk_semi_dev():
-    hfi_portfolio = main.Portfolio(hfi, 12)
+    hfi_portfolio = portfolio.Portfolio(hfi, 12)
     desired = Desired.HFI_SEMI_DEV
     actual = hfi_portfolio.analysed_risk["semi_dev"].to_dict()
     utils.numpy_assert_almost_dicts(desired, actual)
 
 
 def test_calculate_annual_sharpe_explicit():
-    ffme_portfolio = main.Portfolio(ffme, 12)
+    ffme_portfolio = portfolio.Portfolio(ffme, 12)
     desired = Desired.FFME_ANN_SHARPE
-    ffme_portfolio.analysed_returns
-    ffme_portfolio.analysed_risk
+    _ = ffme_portfolio.analysed_returns
+    _ = ffme_portfolio.analysed_risk
     ffme_portfolio.get_annual_sharpe()
     actual = ffme_portfolio.annual_sharpe.to_dict()
     utils.numpy_assert_almost_dicts(desired, actual)
 
 
 def test_calculate_annual_sharpe_implicit():
-    ffme_portfolio = main.Portfolio(ffme, 12)
+    ffme_portfolio = portfolio.Portfolio(ffme, 12)
     desired = Desired.FFME_ANN_SHARPE
     ffme_portfolio.get_annual_sharpe()
     actual = ffme_portfolio.annual_sharpe.to_dict()
@@ -55,7 +54,7 @@ def test_calculate_annual_sharpe_implicit():
 
 
 def test_calculate_annual_sharpe_3pct_implicit():
-    ffme_portfolio = main.Portfolio(ffme, 12)
+    ffme_portfolio = portfolio.Portfolio(ffme, 12)
     desired = Desired.FFME_ANN_SHARPE_3PCT
     ffme_portfolio.get_annual_sharpe(0.03)
     actual = ffme_portfolio.annual_sharpe.to_dict()
@@ -63,7 +62,7 @@ def test_calculate_annual_sharpe_3pct_implicit():
 
 
 def test_simulate_wealth_index():
-    ffme_portfolio = main.Portfolio(ffme, 12)
+    ffme_portfolio = portfolio.Portfolio(ffme, 12)
     desired = Desired.FFME_WEALTH_INDEX
     ffme_portfolio.get_wealth_index(1000)
     actual = ffme_portfolio.wealth_index["largeCap"].tolist()[:5]
@@ -71,7 +70,7 @@ def test_simulate_wealth_index():
 
 
 def test_calculate_max_drawdown_explicit():
-    ffme_portfolio = main.Portfolio(ffme, 12)
+    ffme_portfolio = portfolio.Portfolio(ffme, 12)
     desired = Desired.FFME_MAX_DRAWDOWN
     ffme_portfolio.get_prev_high(ffme_portfolio.get_wealth_index(1000))
     ffme_portfolio.get_max_drawdown(A=1000)
@@ -80,7 +79,7 @@ def test_calculate_max_drawdown_explicit():
 
 
 def test_calculate_max_drawdown_implicit():
-    ffme_portfolio = main.Portfolio(ffme, 12)
+    ffme_portfolio = portfolio.Portfolio(ffme, 12)
     desired = Desired.FFME_MAX_DRAWDOWN
     ffme_portfolio.get_max_drawdown(A=1000)
     actual = ffme_portfolio.drawdown["max_drawdown"].to_dict()
@@ -88,7 +87,7 @@ def test_calculate_max_drawdown_implicit():
 
 
 def test_calculate_max_drawdown_index():
-    ffme_portfolio = main.Portfolio(ffme, 12)
+    ffme_portfolio = portfolio.Portfolio(ffme, 12)
     desired = Desired.FFME_MAX_DRAWDOWN_PERIOD  # aka index
     ffme_portfolio.get_max_drawdown(A=1000)
     actual = ffme_portfolio.drawdown["id_max_drawdown"].to_dict()
@@ -96,7 +95,7 @@ def test_calculate_max_drawdown_index():
 
 
 def test_get_skewness():
-    hfi_portfolio = main.Portfolio(hfi, 12)
+    hfi_portfolio = portfolio.Portfolio(hfi, 12)
     desired = Desired.HFI_SKEWNESS
     hfi_portfolio.get_skewness()
     actual = hfi_portfolio.skewness.sort_values().to_dict()
@@ -104,7 +103,7 @@ def test_get_skewness():
 
 
 def test_get_kurtosis():
-    hfi_portfolio = main.Portfolio(hfi, 12)
+    hfi_portfolio = portfolio.Portfolio(hfi, 12)
     desired = Desired.HFI_KURTOSIS
     hfi_portfolio.get_kurtosis(excess=False)
     actual = hfi_portfolio.kurtosis.to_dict()

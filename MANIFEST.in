@@ -1,5 +1,0 @@
-include *.txt
-recursive-include src *.py
-recursive-include tests *.CSV
-recursive-include tests *.csv
-recursive-include tests *.py

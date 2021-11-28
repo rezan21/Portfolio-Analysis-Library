@@ -4,9 +4,7 @@ black==21.11b1
 isort==5.10.1
 pylint==2.11.1
 scipy==1.7.3
-check-manifest
 twine
 matplotlib
 seaborn
 pytest
-pytest-cov

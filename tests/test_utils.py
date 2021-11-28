@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import pytest
-from src import utils
+from pal import utils
 
 
 def test_load_ffme_returns():

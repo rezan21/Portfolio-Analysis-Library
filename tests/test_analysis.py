@@ -1,6 +1,5 @@
 import numpy as np
-import pytest
-from src import analysis, utils
+from pal import analysis, utils
 
 from .desired import Desired
 

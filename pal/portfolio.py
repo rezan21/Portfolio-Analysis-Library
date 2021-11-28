@@ -1,6 +1,6 @@
 import pandas as pd
 
-import src.analysis as analysis
+import pal.analysis as analysis
 
 
 class Portfolio:
@@ -36,7 +36,6 @@ class Portfolio:
 
     def get_annual_sharpe(self, risk_free_rate: float = 0):
         if not all([self.__analysed_returns, self.__analysed_risk]):
-            print("Please run analyse_returns and analyse_risk first")
             _ = self.analysed_returns
             _ = self.analysed_risk
         self.annual_sharpe = analysis.calculate_annual_sharpe(
@@ -60,7 +59,6 @@ class Portfolio:
 
     def get_max_drawdown(self, A=1000):
         if self.wealth_index is None or self.prev_high is None:
-            print("Please run get_wealth_index and get_prev_high first")
             self.get_wealth_index(A=A)
             self.get_prev_high(self.wealth_index)
         self.drawdown = analysis.calculate_max_drawdown(wealth_index=self.wealth_index, prev_high=self.prev_high)
