@@ -8,3 +8,4 @@ twine
 matplotlib
 seaborn
 pytest
+check-manifest

@@ -1,18 +1,24 @@
+import io
+from importlib import resources
+
 import numpy as np
 import pandas as pd
 
 from .params import Params
 
 
-def load_ffme_returns(cols=None):
+def load_ffme_returns(cols: list = None):
     """
     Load the Fama-French Dataset for the returns of the Top and Bottom Deciles by MarketCap
     """
-    if cols is None:
-        cols = ["Lo 10", "Hi 10"]
-    df = pd.read_csv(Params.DATA_FFME_PATH, index_col=0, na_values=-99.99)
+    with resources.open_binary("tests.data", Params.DATA_FFME_FILE) as file:
+        file = file.read()
+        file = io.BytesIO(file)
+    df = pd.read_csv(file, index_col=0, na_values=-99.99)
     df.index = pd.to_datetime(df.index, format="%Y%m").to_period("M")
     df /= 100
+    if cols is None:
+        cols = ["Lo 10", "Hi 10"]
     df = df[cols]
     df.rename({"Lo 10": "smallCap", "Hi 10": "largeCap"}, axis=1, inplace=True)
     return df
@@ -22,7 +28,10 @@ def load_hfi_returns():
     """
     Load and format the EDHEC Hedge Fund Index Returns
     """
-    df = pd.read_csv(Params.DATA_HFI_PATH, index_col=0)
+    with resources.open_binary("tests.data", Params.DATA_HFI_FILE) as file:
+        file = file.read()
+        file = io.BytesIO(file)
+    df = pd.read_csv(file, index_col=0)
     df.index = pd.to_datetime(df.index).to_period("M")
     df /= 100
     return df

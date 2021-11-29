@@ -21,20 +21,24 @@ def get_src_modules():
 
 
 setup(
+    version="0.0.8",
+    packages=find_packages(
+        # exclude=["tests"]
+    ),
+    # py_modules=["analysis", "log", "main", "pal", "params", "utils"],
+    # package_dir={"": "src"},
+    # include_package_data=True,
+    package_data={"tests.data": ["*.csv"]},
+    python_requires=">=3.6",
+    install_requires=INSTALL_REQUIRES,
+    extras_require={"dev": EXTRAS_REQUIRE},
     name="portfolio-analysis-library",
     description="#WIP: Analysing Stock Returns & Constructing Portfolios with Python",
-    version="0.0.3",
     author="Reza N",
     author_email="32329310+rezan21@users.noreply.github.com",
     url="https://github.com/rezan21/Portfolio-Analysis-Library",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
-    packages=find_packages(exclude=["tests"]),
-    python_requires=">=3.6",
-    # py_modules=["analysis", "log", "main", "pal", "params", "utils"],
-    # package_dir={"": "src"},
-    install_requires=INSTALL_REQUIRES,
-    extras_require={"dev": EXTRAS_REQUIRE},
     classifiers=[
         "Development Status :: 1 - Planning",
         "Programming Language :: Python :: 3",
@@ -50,3 +54,5 @@ setup(
         "Intended Audience :: Financial and Insurance Industry",
     ],
 )
+
+# rm -rf build dist portfolio_analysis_library.egg-info && python setup.py bdist_wheel sdist && unzip -l dist/*.whl && tar --list -f dist/*.tar.gz
